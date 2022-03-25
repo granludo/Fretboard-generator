@@ -1,5 +1,5 @@
 
-class GCode_Gen:
+class gcode_gen:
 ## gcode_gen encapsulates the file where the gcode is output
 ## also echoes the code for debug purposes
 
@@ -13,7 +13,7 @@ class GCode_Gen:
 
     def write(self,code):
         self.file.write(str(code)+"\n\r")
-        if (self.debug)
+        if (self.debug):
             print("g_code:"+str(code))
         return
 
@@ -22,7 +22,7 @@ class GCode_Gen:
         self.file.close()
 
 ###############################################
-class g_point:
+class point:
 ## implements a point in g code (pun intended ;-) )
     x=0
     y=0

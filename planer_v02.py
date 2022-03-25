@@ -2,7 +2,9 @@
 # By Marc Alier , https://aprendizdeluthier.com
 # March 2022
 # Generates G CODE to plane with a CNC Machine, tested for Mach 3 .tab format
-# starts from Origin X=0 Y=0 Z=0
+# Generates GCode for a “face” operation.
+# Starts at 0,0,0 and builds up a rectangle to max_x, max_y, 0.
+# Clearance, bit with, overlap are in variables. No interfaces yet.
 
 ###############################################
 class GCode_Gen:

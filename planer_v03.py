@@ -1,40 +1,15 @@
-# planer.py  v 0.2
+# planer.py  v 0.3
 # By Marc Alier , https://aprendizdeluthier.com
 # March 2022
 # Generates G CODE to plane with a CNC Machine, tested for Mach 3 .tab format
-# starts from Origin X=0 Y=0 Z=0
+# Generates GCode for a “face” operation.
+# Starts at 0,0,0 and builds up a rectangle to max_x, max_y, 0.
+# Clearance, bit with, overlap are in variables. No interfaces yet.
 
+# v3 modified to work with package .gcode_lib gcode_tools
+import .gcode_lib
+## imports gcode_gen and g_point
 ###############################################
-class GCode_Gen:
-    G_START_SPINDLE = "M3"
-    G_STOP_SPINDLE = "M5"
-
-    file = None
-    def __init__(self, filename ):
-        self.file = open(filename, 'w+')
-
-    def write(self,code):
-        self.file.write(str(code)+"\n\r")
-        print("g_code:"+str(code))
-        return
-
-    def end(self):
-        self.file.flush()
-        self.file.close()
-###############################################
-class g_point:
-    x=0
-    y=0
-    z=0
-
-    def __init__(self,x,y,z):
-        self.x=x
-        self.y=y
-        self.z=z
-
-    def __str__(self):
-        return "X"+str(self.x) +" Y"+str(self.y)+" Z"+str(self.z)
-
 ###############################################
 max_x = 450
 max_y = 500

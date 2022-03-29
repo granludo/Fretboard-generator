@@ -1,3 +1,11 @@
+# By Marc Alier , https://aprendizdeluthier.com
+# granludo at the gmail thing
+# March 2022
+# License GPLv3
+
+
+# from madcad import *
+# import the pymadcad library from https://github.com/jimy-byerley/pymadcad
 
 class gcode_gen:
 ## gcode_gen encapsulates the file where the gcode is output
@@ -36,20 +44,5 @@ class point:
     def __str__(self):
         return "X"+str(self.x) +" Y"+str(self.y)+" Z"+str(self.z)
 
-class fretboard:
-## implements a fretboard
-## default values, they can be modified
-    frets=22
-    scale_left=640
-    # scale_right=640
-    # fret_width=0,6
-    # radius=10 #inches because i am an idiot
-    # width_at_nut = 58
-    # with_at_16th = 64
-    mesh = []
-    def __init__(self) :
-        self.calculate()
-
-    def calculate(self) :
-        # TODO
-        return
+    def vec3(): #return madcad vec3 object
+        return vec3(sef.x, self.y,self.z)

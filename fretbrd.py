@@ -4,6 +4,7 @@
 # License GPLv3
 
 import ezdxf
+from gcode_lib import dxf2image
 
 class fretboard:
 ## implements a fretted instument (guitar, bass, ukelele, etc) fretboard
@@ -70,9 +71,9 @@ class fretboard:
 
 
 fretb=fretboard()
-fretb.generate_dxf("fretboard_test.dxf")
-
-
+fretb.generate_dxf("./output/dxf/fretboard_test.dxf")
+dxf2image.convert_dxf2img(["./output/dxf/fretboard_test.dxf"],"./output/png/")
+dxf2image.convert_dxf2img(["./output/dxf/fretboard_test.dxf"],"./output/pdf/", img_format=".pdf")
 
 
 # Create a new DXF R2010 drawing, official DXF version name: "AC1024"

@@ -6,12 +6,13 @@ from ezdxf.addons.drawing.matplotlib import MatplotlibBackend
 #import wx
 import glob
 import re
+import os
 
 
 default_img_format = '.png'
 default_img_res = 300
 default_bg_color = '#FFFFFF' #White
-def convert_dxf2img( names, img_format=default_img_format, img_res=default_img_res, clr=default_bg_color):
+def convert_dxf2img( names, folder, img_format=default_img_format, img_res=default_img_res, clr=default_bg_color):
     for name in names:
         doc = ezdxf.readfile(name)
         msp = doc.modelspace()
@@ -33,8 +34,9 @@ def convert_dxf2img( names, img_format=default_img_format, img_res=default_img_r
 
             img_name = re.findall("(\S+)\.",name)  # select the image name that is the same as the dxf file name
             first_param = ''.join(img_name) + img_format  #concatenate list and string
+            first_param=folder+os.path.basename(first_param)
             fig.savefig(first_param, dpi=img_res)
             print(name," Converted Successfully")
 
 
-convert_dxf2img(["fretboard_test.dxf"])
+#convert_dxf2img(["fretboard_test.dxf"])

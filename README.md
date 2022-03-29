@@ -11,5 +11,15 @@ Generates GCode for a “face” operation. Starts at 0,0,0 and builds up a rect
 Generates GCode for a “face” operation. Starts at 0,0,0 and builds up a rectangle to max_x, max_y, 0. Clearance, bit with, overlap are in variables. No interfaces yet.
 Uses the gcode_lib package
 
+### fretbrd.py
+
+Generates a stringed instrument fretoard , output in dxf
+
 ## gcode_lib package
 Package with utility code
+### gcode.py
+Implements class gcode_gen wich should encapsulate writting gcode see planer_v03.py for example of use.
+
+### dxf2image.py
+
+Implements conversion of .DXF files to .PNG and PDF 

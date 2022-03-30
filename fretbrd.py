@@ -94,8 +94,8 @@ class fretboard:
             if fret_number==0 :
                 fret_label="NUT"
             else :
-                fret_label="FRET "+str(fret_number)+": "+str(fret)
-                msp.add_text(fret_label).set_pos((220, p1[1]), align='MIDDLE_RIGHT')
+                fret_label="FRET "+str(fret_number)+": "+str(p2[1])+" mm"
+                msp.add_text(fret_label).set_pos((150, p1[1]), align='MIDDLE_RIGHT')
 #            print(fret_label)
             fret_number=fret_number+1
         msp.add_line((self.left_side[0][0],self.left_side[0][1]),(self.left_side[1][0],self.left_side[1][1]))
@@ -103,9 +103,10 @@ class fretboard:
         msp.add_text("Scale="+str(self.scale)).set_pos((110, -30), align='MIDDLE_RIGHT')
         msp.add_text("Width at nut="+str(self.width_at_nut)).set_pos((110, -10), align='MIDDLE_RIGHT')
         msp.add_text("Width at bridge="+str(self.width_at_bridge)).set_pos((110, -20), align='MIDDLE_RIGHT')
-        msp.add_text("==========NUT=========").set_pos((0, -6), align='MIDDLE_CENTER')
-        msp.add_text("==========BRIDGE=========").set_pos((0, self.scale), align='MIDDLE_CENTER')
-
+        msp.add_text("==========NUT:"+str(self.width_at_nut)+"mm =========").set_pos((0, -6), align='MIDDLE_CENTER')
+        msp.add_text("==========BRIDGE:"+str(self.width_at_bridge)+"=========").set_pos((0, self.scale), align='MIDDLE_CENTER')
+        msp.add_text("granludo/gcode on github, fretboard generator by Marc Alier @granludo").set_pos((-100, -30), align='LEFT')
+        msp.add_text("https://aprendideluthier.com").set_pos((-100, -40), align='LEFT')
         doc.saveas(fname)
 
 

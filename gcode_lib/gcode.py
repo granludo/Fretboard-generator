@@ -46,3 +46,5 @@ class point:
 
     def vec3(): #return madcad vec3 object
         return vec3(sef.x, self.y,self.z)
+
+    

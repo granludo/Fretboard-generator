@@ -16,7 +16,7 @@ Uses the gcode_lib package
 
 Generates a stringed instrument fretoard , output in dxf, png and PDF
 
-[sample]:https://github.com/granludo/gcode/blob/main/output/png/fretboard_cameron.png?raw=true
+[sample]:(https://github.com/granludo/gcode/blob/main/output/png/fretboard_cameron.png?raw=true)
 
 
 ## gcode_lib package

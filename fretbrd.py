@@ -8,7 +8,6 @@ import ezdxf
 from gcode_lib import dxf2image
 from gcode_lib import intersect
 
-
 class fretboard:
 ## implements a fretted instument (guitar, bass, ukelele, etc) fretboard
 ## default values, they can be modified
@@ -28,18 +27,22 @@ class fretboard:
     actual_frets = []
     left_side = []
     right_side =[]
+    fret_perpenticular_to_centerline =-1
 
 
     def __init__(self) :
         self.calculate()
 
-    def calculate(self):
+    def calculate(self): # makes the internal calculations of the fretboard
         self.calculate_frets()
-        self.left_side=[[-(self.width_at_nut/2),0],[-(self.width_at_bridge/2),self.scale]]
-        self.right_side=[[(self.width_at_nut/2),+self.bridge_compensation],[(self.width_at_bridge/2),self.scale_right+self.bridge_compensation]]
+        self.calculate_sides()
         self.calculate_2dfrets()
 
-    def calculate_2dfrets(self):
+    def calculate_sides(self): #calculates the lines corresponding with the sides of the fretboard
+        self.left_side=[[-(self.width_at_nut/2),0],[-(self.width_at_bridge/2),self.scale]]
+        self.right_side=[[(self.width_at_nut/2),+self.bridge_compensation],[(self.width_at_bridge/2),self.scale_right+self.bridge_compensation]]
+
+    def calculate_2dfrets(self): #calculates the segments of the frets, from side to side
         self.actual_frets=[]
         n=0
         while n < self.n_frets:
@@ -61,7 +64,7 @@ class fretboard:
         for actual in self.actual_frets:
             print(actual)
 
-    def calculate_frets(self) :
+    def calculate_frets(self) : #calculates the vertical distances of the frets with relation to the centerline
     # calculates the fret positions in the fretboard, only call it if
     # some of the attributes has been modified
         self.frets=[]
@@ -80,6 +83,23 @@ class fretboard:
             n=n+1
         return
 
+    def set_fret_perpenticular_to_centerline(self,number):
+        #recalculates the whole fretboard defining the bridge compensation so the fret (number) is perpenticular to the centerline
+        if number > self.n_frets:
+            print("Fretboard Error set_fret_perpenticular_to_centerline:fret number out of range:"+str(number))
+            return
+        self.bridge_compensation=0
+        #calculate fret heights without compensation
+        self.calculate_frets()
+        self.fret_perpenticular_to_centerline=number
+        lfret_from_bridge=self.scale-self.frets[number]
+        rfret_from_bridge=self.scale_right-self.frets_right[number]
+        self.bridge_compensation = lfret_from_bridge-rfret_from_bridge
+        print("lfret_from_bridge:"+str(lfret_from_bridge))
+        print("rfret_from_bridge:"+str(rfret_from_bridge))
+        print("Bridge compensation:"+str(self.bridge_compensation))
+        # recalculate with actual compensation
+        self.calculate()
 
     def __str__(self) :
         temp = "Fretboard: \n Scale="+ str(self.scale) + "\n"
@@ -103,8 +123,10 @@ class fretboard:
         draw=draw_tool()
 #draw centerline
         msp.add_line((0, draw.transform(-10)), (0, draw.transform(self.scale+50)),dxfattribs={"linetype": "CENTER"}) #centerline
-
-# draws frets
+#draw fret_perpenticular_to_centerline
+        if self.fret_perpenticular_to_centerline>=0:
+            msp.add_line((-100,draw.transform(self.frets[self.fret_perpenticular_to_centerline])),(100,draw.transform(self.frets[self.fret_perpenticular_to_centerline])),dxfattribs={"linetype": "CENTER"})
+# draws frets,
         for fret in self.actual_frets:
             p1=fret[0]
             p2=fret[1]
@@ -142,12 +164,21 @@ class draw_tool:
     #silly class implemented for rendering nicelly, original coords mean 0,0 is at the nut
     flip_model=-1
     offset= 750 # arbitrary number
+    grid = 5
     def __init__(self):
         self.flip_model=-1
 
     def transform(self,y):
         return self.offset+(y*self.flip_model)
 
+    def draw_grid(self, msp):
+        if grid <0 :
+            return
+        n=0
+        while n<600:
+            msp.add_line((-300, n), (300, n),dxfattribs={"linetype": "CENTER"}) #hoizontal grid
+            msp.add_line((0, n), (0, 0),dxfattribs={"linetype": "CENTER"}) #vertical grid
+            n=n+self.grid
 
     def draw_line(self,msp,x1,y1,x2,y2) :
         y1=self.transform(y1)
@@ -155,9 +186,15 @@ class draw_tool:
         msp.add_line((x1,y1),(x2,y2))
 
 fretb=fretboard()
-fretb.generate_dxf("./output/dxf/fretboard_test.dxf")
-dxf2image.convert_dxf2img(["./output/dxf/fretboard_test.dxf"],"./output/png/")
-dxf2image.convert_dxf2img(["./output/dxf/fretboard_test.dxf"],"./output/pdf/", img_format=".pdf")
+fretb.scale=650
+fretb.scale_right=630
+fretb.width_at_nut=35
+fretb.width_at_bridge=53
+fretb.set_fret_perpenticular_to_centerline(12)
+filename="./output/dxf/fretboard_cameron.dxf"
+fretb.generate_dxf(filename)
+dxf2image.convert_dxf2img([filename],"./output/png/")
+dxf2image.convert_dxf2img([filename],"./output/pdf/", img_format=".pdf")
 
 
 # Create a new DXF R2010 drawing, official DXF version name: "AC1024"

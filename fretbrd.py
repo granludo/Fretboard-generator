@@ -126,6 +126,7 @@ class fretboard:
 
 #writes some legends
         msp.add_text("Scale="+str(self.scale)).set_pos((110, draw.transform(-30)), align='MIDDLE_RIGHT')
+        msp.add_text("Scale_2="+str(self.scale_right)).set_pos((110, draw.transform(-40)), align='MIDDLE_RIGHT')
         msp.add_text("Width at nut="+str(self.width_at_nut)).set_pos((110, draw.transform(-10)), align='MIDDLE_RIGHT')
         msp.add_text("Width at bridge="+str(self.width_at_bridge)).set_pos((110, draw.transform(-20)), align='MIDDLE_RIGHT')
         msp.add_text("==========NUT:"+str(self.width_at_nut)+"mm =========").set_pos((0, draw.transform(-10)), align='MIDDLE_CENTER')

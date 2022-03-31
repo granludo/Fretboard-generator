@@ -113,8 +113,9 @@ class fretboard:
             if fret_number==0 :
                 fret_label="NUT"
             else :
-                fret_label="FRET "+str(fret_number)+": "+str(p2[1])+" mm"
+                fret_label="FRET "+str(fret_number)+": "+str(p1[1])+" mm"
                 msp.add_text(fret_label).set_pos((-150, draw.transform(p1[1])), align='MIDDLE_LEFT')
+                fret_label="FRET "+str(fret_number)+": "+str(p2[1])+" mm"
                 msp.add_text(fret_label).set_pos((150, draw.transform(p2[1])), align='MIDDLE_RIGHT')
 #            print(fret_label)
             fret_number=fret_number+1

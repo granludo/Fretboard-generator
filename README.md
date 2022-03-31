@@ -1,5 +1,5 @@
-#  GCode ... G Code Generation tools for CNC milling machines
-#  and... MULTISCALE GUITAR FRETBOARD DESIGNER 
+#  GCode Generation and CAD Tools for Guitar Design and Building 
+#  Including the MULTISCALE GUITAR/BASS FRETBOARD DESIGNER 
 by Marc Alier https://aprendizdeluthier.com https://www.essi.upc.edu/~ludo/
 License GNU GPL 3.0
 Contact: granludo (at) the gmail thing

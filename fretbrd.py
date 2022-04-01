@@ -141,13 +141,16 @@ class fretboard:
             msp.add_text("granludo/gcode on github, fretboard generator by Marc Alier @granludo").set_pos((-100,draw.transform(-30)), align='LEFT')
             msp.add_text("https://aprendideluthier.com").set_pos((-100, draw.transform(-40)), align='LEFT')
 
- 
+
     def draw_structure(self,msp,draw):
         #draws sides
         draw.draw_line(msp,self.left_side[0][0],self.left_side[0][1],self.left_side[1][0],self.left_side[1][1])
         draw.draw_line(msp,self.right_side[0][0],self.right_side[0][1],self.right_side[1][0],self.right_side[1][1])
         #draws compensated bridge line
         draw.draw_line(msp,-self.width_at_bridge/2,self.scale,(self.width_at_bridge)/2,self.scale_right+self.bridge_compensation)
+#draw zero line
+        msp.add_line((-100, draw.transform(0)), (100, draw.transform(0)),dxfattribs={"linetype": "CENTER2"}) #zero line
+
         return
 
     def draw_frets(self,msp,draw):
@@ -157,13 +160,13 @@ class fretboard:
             p2=fret[1]
             draw.draw_line(msp,p1[0],p1[1],p2[0],p2[1])
     #using 100, 200 and 20 as arbitray numbers
-            if fret_number==0 :
-                fret_label="NUT"
-            else :
-                fret_label="FRET "+str(fret_number)+": "+str(p1[1])+" mm"
-                msp.add_text(fret_label).set_pos((-150, draw.transform(p1[1])), align='MIDDLE_LEFT')
-                fret_label="FRET "+str(fret_number)+": "+str(p2[1])+" mm"
-                msp.add_text(fret_label).set_pos((150, draw.transform(p2[1])), align='MIDDLE_RIGHT')
+        #    if fret_number==0 :
+        #        fret_label="NUT"
+        #    else :
+            fret_label="FRET "+str(fret_number)+": "+str(p1[1])+" mm"
+            msp.add_text(fret_label).set_pos((-150, draw.transform(p1[1])), align='MIDDLE_LEFT')
+            fret_label="FRET "+str(fret_number)+": "+str(p2[1])+" mm"
+            msp.add_text(fret_label).set_pos((150, draw.transform(p2[1])), align='MIDDLE_RIGHT')
 #            print(fret_label)
             fret_number=fret_number+1
         return

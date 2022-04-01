@@ -489,7 +489,7 @@ $SKPOLY
   9
 $TDCREATE
  40
-2459671.4747222224
+2459671.6774652777
   9
 $TDUCREATE
  40
@@ -497,7 +497,7 @@ $TDUCREATE
   9
 $TDUPDATE
  40
-2459671.4747222224
+2459671.6774652777
   9
 $TDUUPDATE
  40
@@ -549,7 +549,7 @@ $SPLINESEGS
   9
 $HANDSEED
   5
-DE
+E2
   9
 $SURFTAB1
  70
@@ -929,11 +929,11 @@ $PSTYLEMODE
   9
 $FINGERPRINTGUID
   2
-{FE5653D6-93A6-4CEB-8E78-028E41F32008}
+{A38C21D2-14C4-47E3-AF38-AA5ADDEB3778}
   9
 $VERSIONGUID
   2
-{CBEFB123-D03A-4961-B548-EB742429C74A}
+{FAF9E97B-FAFA-47A1-A3F3-819A1727EDF6}
   9
 $EXTNAMES
 290
@@ -1323,9 +1323,9 @@ ISM
   0
 CLASS
   1
-LAYOUT
+ACDBPLACEHOLDER
   2
-AcDbLayout
+AcDbPlaceHolder
   3
 ObjectDBX Classes
  90
@@ -1339,9 +1339,9 @@ ObjectDBX Classes
   0
 CLASS
   1
-ACDBPLACEHOLDER
+LAYOUT
   2
-AcDbPlaceHolder
+AcDbLayout
   3
 ObjectDBX Classes
  90
@@ -3085,7 +3085,7 @@ ACAD
   0
 APPID
   5
-DB
+DF
 330
 3
 100
@@ -3099,7 +3099,7 @@ HATCHBACKGROUNDCOLOR
   0
 APPID
   5
-DC
+E0
 330
 3
 100
@@ -7339,7 +7339,7 @@ AcDbLine
  31
 0.0
   0
-TEXT
+LINE
   5
 D2
 330
@@ -7348,32 +7348,24 @@ D2
 AcDbEntity
   8
 0
+  6
+DASHED2
 100
-AcDbText
+AcDbLine
  10
-110.0
+-19.5
  20
-780.0
+750.0
  30
 0.0
- 40
-2.5
-  1
-Scale=650
- 72
-2
  11
-110.0
+-28.5
  21
-780.0
+100.0
  31
 0.0
-100
-AcDbText
- 73
-2
   0
-TEXT
+LINE
   5
 D3
 330
@@ -7382,30 +7374,22 @@ D3
 AcDbEntity
   8
 0
+  6
+DASHED2
 100
-AcDbText
+AcDbLine
  10
-110.0
+19.5
  20
-790.0
+750.0
  30
 0.0
- 40
-2.5
-  1
-Scale_2=630
- 72
-2
  11
-110.0
+28.5
  21
-790.0
+100.0
  31
 0.0
-100
-AcDbText
- 73
-2
   0
 TEXT
   5
@@ -7421,19 +7405,19 @@ AcDbText
  10
 110.0
  20
-760.0
+780.0
  30
 0.0
  40
 2.5
   1
-Width at nut=35
+Overhang=2
  72
 2
  11
 110.0
  21
-760.0
+780.0
  31
 0.0
 100
@@ -7455,19 +7439,19 @@ AcDbText
  10
 110.0
  20
-770.0
+810.0
  30
 0.0
  40
 2.5
   1
-Width at bridge=53
+Scale=650
  72
 2
  11
 110.0
  21
-770.0
+810.0
  31
 0.0
 100
@@ -7487,9 +7471,111 @@ AcDbEntity
 100
 AcDbText
  10
+110.0
+ 20
+820.0
+ 30
+0.0
+ 40
+2.5
+  1
+Scale_2=630
+ 72
+2
+ 11
+110.0
+ 21
+820.0
+ 31
+0.0
+100
+AcDbText
+ 73
+2
+  0
+TEXT
+  5
+D7
+330
+17
+100
+AcDbEntity
+  8
+0
+100
+AcDbText
+ 10
+110.0
+ 20
+790.0
+ 30
+0.0
+ 40
+2.5
+  1
+Width at nut=35
+ 72
+2
+ 11
+110.0
+ 21
+790.0
+ 31
+0.0
+100
+AcDbText
+ 73
+2
+  0
+TEXT
+  5
+D8
+330
+17
+100
+AcDbEntity
+  8
+0
+100
+AcDbText
+ 10
+110.0
+ 20
+800.0
+ 30
+0.0
+ 40
+2.5
+  1
+Width at bridge=53
+ 72
+2
+ 11
+110.0
+ 21
+800.0
+ 31
+0.0
+100
+AcDbText
+ 73
+2
+  0
+TEXT
+  5
+D9
+330
+17
+100
+AcDbEntity
+  8
+0
+100
+AcDbText
+ 10
 0.0
  20
-760.0
+740.0
  30
 0.0
  40
@@ -7501,7 +7587,7 @@ AcDbText
  11
 0.0
  21
-760.0
+740.0
  31
 0.0
 100
@@ -7511,7 +7597,7 @@ AcDbText
   0
 TEXT
   5
-D7
+DA
 330
 17
 100
@@ -7545,7 +7631,7 @@ AcDbText
   0
 TEXT
   5
-D8
+DB
 330
 17
 100
@@ -7579,7 +7665,41 @@ AcDbText
   0
 TEXT
   5
-D9
+DC
+330
+17
+100
+AcDbEntity
+  8
+0
+100
+AcDbText
+ 10
+26.5
+ 20
+96.0
+ 30
+0.0
+ 40
+2.5
+  1
+BRIDGE SCALE COMPENSATION:10.0 
+ 72
+1
+ 11
+26.5
+ 21
+96.0
+ 31
+0.0
+100
+AcDbText
+ 73
+2
+  0
+TEXT
+  5
+DD
 330
 17
 100
@@ -7609,7 +7729,7 @@ AcDbText
   0
 TEXT
   5
-DA
+DE
 330
 17
 100
@@ -8731,7 +8851,7 @@ CREATED_BY_EZDXF
   3
 WRITTEN_BY_EZDXF
 350
-DD
+E1
   0
 DICTIONARYVAR
   5
@@ -8743,7 +8863,7 @@ DictionaryVariables
 280
 0
   1
-0.17.2 @ 2022-04-01T09:23:36.545175+00:00
+0.17.2 @ 2022-04-01T14:15:33.105371+00:00
   0
 VISUALSTYLE
   5
@@ -9447,7 +9567,7 @@ X-Ray
   0
 DICTIONARYVAR
   5
-DD
+E1
 330
 2D
 100
@@ -9455,7 +9575,7 @@ DictionaryVariables
 280
 0
   1
-0.17.2 @ 2022-04-01T09:23:36.552900+00:00
+0.17.2 @ 2022-04-01T14:15:33.112930+00:00
   0
 ENDSEC
   0

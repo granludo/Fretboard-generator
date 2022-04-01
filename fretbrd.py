@@ -12,6 +12,7 @@ class fretboard:
 ## implements a fretted instument (guitar, bass, ukelele, etc) fretboard
 ## default values, they can be modified
 ## all units in mm unless othewise stated
+    overhang=2 #distance from string to edge at nut and bridge
     n_frets=22
     scale=640.0 #fender
     scale_right=628 # gibson
@@ -130,13 +131,17 @@ class fretboard:
         doc.saveas(fname)
 
     def draw_legends(self,msp, draw):
-        msp.add_text("Scale="+str(self.scale)).set_pos((110, draw.transform(-30)), align='MIDDLE_RIGHT')
-        msp.add_text("Scale_2="+str(self.scale_right)).set_pos((110, draw.transform(-40)), align='MIDDLE_RIGHT')
-        msp.add_text("Width at nut="+str(self.width_at_nut)).set_pos((110, draw.transform(-10)), align='MIDDLE_RIGHT')
-        msp.add_text("Width at bridge="+str(self.width_at_bridge)).set_pos((110, draw.transform(-20)), align='MIDDLE_RIGHT')
-        msp.add_text("==========NUT:"+str(self.width_at_nut)+"mm =========").set_pos((0, draw.transform(-10)), align='MIDDLE_CENTER')
+        init=-30
+        msp.add_text("Overhang="+str(self.overhang)).set_pos((110, draw.transform(init)), align='MIDDLE_RIGHT')
+        msp.add_text("Scale="+str(self.scale)).set_pos((110, draw.transform(init-30)), align='MIDDLE_RIGHT')
+        msp.add_text("Scale_2="+str(self.scale_right)).set_pos((110, draw.transform(init-40)), align='MIDDLE_RIGHT')
+        msp.add_text("Width at nut="+str(self.width_at_nut)).set_pos((110, draw.transform(init-10)), align='MIDDLE_RIGHT')
+        msp.add_text("Width at bridge="+str(self.width_at_bridge)).set_pos((110, draw.transform(init-20)), align='MIDDLE_RIGHT')
+        msp.add_text("==========NUT:"+str(self.width_at_nut)+"mm =========").set_pos((0, draw.transform(10)), align='MIDDLE_CENTER')
         msp.add_text("==========BRIDGE:"+str(self.width_at_bridge)+"=========").set_pos((0, draw.transform(self.scale+10)), align='MIDDLE_CENTER')
         if self.bridge_compensation!=0 :
+            e = "BRIDGE SCALE COMPENSATION:"+str(self.bridge_compensation)+" "
+            t=msp.add_text(str(e)).set_pos((self.width_at_bridge/2, draw.transform(self.scale+4)), align='MIDDLE_CENTER')
             msp.add_text("BRIDGE SCALE COMPENSATION:"+str(self.bridge_compensation)+" ").set_pos((self.width_at_bridge/2, draw.transform(self.scale+4)), align='MIDDLE_CENTER')
             msp.add_text("granludo/gcode on github, fretboard generator by Marc Alier @granludo").set_pos((-100,draw.transform(-30)), align='LEFT')
             msp.add_text("https://aprendideluthier.com").set_pos((-100, draw.transform(-40)), align='LEFT')
@@ -150,7 +155,8 @@ class fretboard:
         draw.draw_line(msp,-self.width_at_bridge/2,self.scale,(self.width_at_bridge)/2,self.scale_right+self.bridge_compensation)
 #draw zero line
         msp.add_line((-100, draw.transform(0)), (100, draw.transform(0)),dxfattribs={"linetype": "CENTER2"}) #zero line
-
+        msp.add_line((-(self.width_at_nut/2+self.overhang), draw.transform(0)), (-(self.width_at_bridge/2+self.overhang), draw.transform(self.scale)),dxfattribs={"linetype": "DASHED2"}) #left side
+        msp.add_line(((self.width_at_nut/2+self.overhang), draw.transform(0)), ((self.width_at_bridge/2+self.overhang), draw.transform(self.scale)),dxfattribs={"linetype": "DASHED2"}) #left side
         return
 
     def draw_frets(self,msp,draw):

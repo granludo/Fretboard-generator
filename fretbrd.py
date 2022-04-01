@@ -141,7 +141,7 @@ class fretboard:
             msp.add_text("granludo/gcode on github, fretboard generator by Marc Alier @granludo").set_pos((-100,draw.transform(-30)), align='LEFT')
             msp.add_text("https://aprendideluthier.com").set_pos((-100, draw.transform(-40)), align='LEFT')
 
-
+ 
     def draw_structure(self,msp,draw):
         #draws sides
         draw.draw_line(msp,self.left_side[0][0],self.left_side[0][1],self.left_side[1][0],self.left_side[1][1])

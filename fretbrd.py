@@ -112,26 +112,51 @@ class fretboard:
 
     def generate_dxf(self, fname) :
 
-        model_width = 500
-        model_height = 900
+    #    model_width = 500
+    #    model_height = 900
 
         doc = ezdxf.new('R2010', setup=True)
         doc.header['$INSUNITS'] = 4 #sets units to milimeters
-        # Add new entities to the modelspace:
         msp = doc.modelspace()
-        fret_number=0
         draw=draw_tool()
 #draw centerline
         msp.add_line((0, draw.transform(-10)), (0, draw.transform(self.scale+50)),dxfattribs={"linetype": "CENTER"}) #centerline
 #draw fret_perpenticular_to_centerline
         if self.fret_perpenticular_to_centerline>=0:
             msp.add_line((-100,draw.transform(self.frets[self.fret_perpenticular_to_centerline])),(100,draw.transform(self.frets[self.fret_perpenticular_to_centerline])),dxfattribs={"linetype": "CENTER"})
-# draws frets,
+        self.draw_frets(msp,draw)
+        self.draw_structure(msp,draw)
+        self.draw_legends(msp,draw)
+        doc.saveas(fname)
+
+    def draw_legends(self,msp, draw):
+        msp.add_text("Scale="+str(self.scale)).set_pos((110, draw.transform(-30)), align='MIDDLE_RIGHT')
+        msp.add_text("Scale_2="+str(self.scale_right)).set_pos((110, draw.transform(-40)), align='MIDDLE_RIGHT')
+        msp.add_text("Width at nut="+str(self.width_at_nut)).set_pos((110, draw.transform(-10)), align='MIDDLE_RIGHT')
+        msp.add_text("Width at bridge="+str(self.width_at_bridge)).set_pos((110, draw.transform(-20)), align='MIDDLE_RIGHT')
+        msp.add_text("==========NUT:"+str(self.width_at_nut)+"mm =========").set_pos((0, draw.transform(-10)), align='MIDDLE_CENTER')
+        msp.add_text("==========BRIDGE:"+str(self.width_at_bridge)+"=========").set_pos((0, draw.transform(self.scale+10)), align='MIDDLE_CENTER')
+        if self.bridge_compensation!=0 :
+            msp.add_text("BRIDGE SCALE COMPENSATION:"+str(self.bridge_compensation)+" ").set_pos((self.width_at_bridge/2, draw.transform(self.scale+4)), align='MIDDLE_CENTER')
+            msp.add_text("granludo/gcode on github, fretboard generator by Marc Alier @granludo").set_pos((-100,draw.transform(-30)), align='LEFT')
+            msp.add_text("https://aprendideluthier.com").set_pos((-100, draw.transform(-40)), align='LEFT')
+
+
+    def draw_structure(self,msp,draw):
+        #draws sides
+        draw.draw_line(msp,self.left_side[0][0],self.left_side[0][1],self.left_side[1][0],self.left_side[1][1])
+        draw.draw_line(msp,self.right_side[0][0],self.right_side[0][1],self.right_side[1][0],self.right_side[1][1])
+        #draws compensated bridge line
+        draw.draw_line(msp,-self.width_at_bridge/2,self.scale,(self.width_at_bridge)/2,self.scale_right+self.bridge_compensation)
+        return
+
+    def draw_frets(self,msp,draw):
+        fret_number=0
         for fret in self.actual_frets:
             p1=fret[0]
             p2=fret[1]
             draw.draw_line(msp,p1[0],p1[1],p2[0],p2[1])
-            #using 100, 200 and 20 as arbitray numbers
+    #using 100, 200 and 20 as arbitray numbers
             if fret_number==0 :
                 fret_label="NUT"
             else :
@@ -141,24 +166,7 @@ class fretboard:
                 msp.add_text(fret_label).set_pos((150, draw.transform(p2[1])), align='MIDDLE_RIGHT')
 #            print(fret_label)
             fret_number=fret_number+1
-#draws sides
-        draw.draw_line(msp,self.left_side[0][0],self.left_side[0][1],self.left_side[1][0],self.left_side[1][1])
-        draw.draw_line(msp,self.right_side[0][0],self.right_side[0][1],self.right_side[1][0],self.right_side[1][1])
-#draws compensated bridge line
-        draw.draw_line(msp,-self.width_at_bridge/2,self.scale,(self.width_at_bridge)/2,self.scale_right+self.bridge_compensation)
-
-#writes some legends
-        msp.add_text("Scale="+str(self.scale)).set_pos((110, draw.transform(-30)), align='MIDDLE_RIGHT')
-        msp.add_text("Scale_2="+str(self.scale_right)).set_pos((110, draw.transform(-40)), align='MIDDLE_RIGHT')
-        msp.add_text("Width at nut="+str(self.width_at_nut)).set_pos((110, draw.transform(-10)), align='MIDDLE_RIGHT')
-        msp.add_text("Width at bridge="+str(self.width_at_bridge)).set_pos((110, draw.transform(-20)), align='MIDDLE_RIGHT')
-        msp.add_text("==========NUT:"+str(self.width_at_nut)+"mm =========").set_pos((0, draw.transform(-10)), align='MIDDLE_CENTER')
-        msp.add_text("==========BRIDGE:"+str(self.width_at_bridge)+"=========").set_pos((0, draw.transform(self.scale+10)), align='MIDDLE_CENTER')
-        if self.bridge_compensation!=0 :
-             msp.add_text("BRIDGE SCALE COMPENSATION:"+str(self.bridge_compensation)+" ").set_pos((self.width_at_bridge/2, draw.transform(self.scale+4)), align='MIDDLE_CENTER')
-        msp.add_text("granludo/gcode on github, fretboard generator by Marc Alier @granludo").set_pos((-100,draw.transform(-30)), align='LEFT')
-        msp.add_text("https://aprendideluthier.com").set_pos((-100, draw.transform(-40)), align='LEFT')
-        doc.saveas(fname)
+        return
 
 class draw_tool:
     #silly class implemented for rendering nicelly, original coords mean 0,0 is at the nut
@@ -177,7 +185,7 @@ class draw_tool:
         n=0
         while n<600:
             msp.add_line((-300, n), (300, n),dxfattribs={"linetype": "CENTER"}) #hoizontal grid
-            msp.add_line((0, n), (0, 0),dxfattribs={"linetype": "CENTER"}) #vertical grid
+            msp.add_line((0, n), (0, 0),dxfattribs={"linetype": "DOTTED"}) #vertical grid
             n=n+self.grid
 
     def draw_line(self,msp,x1,y1,x2,y2) :
